@@ -103,7 +103,7 @@ if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
     }
     if(ball.x>canvas.width){
       scoreB += 1;
-      document.getElementById("player2Score").innerHTML = scoreB;
+      document.getElementById("player1Score").innerHTML = scoreB;
     }
     ball.resetting = true;
 
