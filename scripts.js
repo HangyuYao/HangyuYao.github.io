@@ -1,4 +1,5 @@
 const canvas = document.getElementById('game');
+const play = document.getElementById('play');
 const context = canvas.getContext('2d');
 const grid = 15;
 const paddleHeight = grid * 5; // 80
@@ -35,6 +36,7 @@ const ball = {
   width: grid,
   height: grid,
 
+  
   // keep track of when need to reset the ball position
   resetting: false,
 
@@ -58,6 +60,7 @@ function loop() {
   context.clearRect(0,0,canvas.width,canvas.height);
 
   // move paddles by their velocity
+  
   leftPaddle.y += leftPaddle.dy;
   rightPaddle.y += rightPaddle.dy;
 
@@ -82,9 +85,10 @@ function loop() {
   context.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
 
   // move ball by its velocity
+ 
   ball.x += ball.dx;
   ball.y += ball.dy;
-
+  leftPaddle.y=ball.y;
   // prevent ball from going through walls by changing its velocity
   if (ball.y < grid) {
     ball.y = grid;
@@ -98,13 +102,39 @@ function loop() {
   // reset ball if it goes past paddle (but only if we haven't already done so)
 if ( (ball.x < 0 || ball.x > canvas.width) && !ball.resetting) {
     if(ball.x<0){
+        
        scoreA += 1;
       document.getElementById("player2Score").innerHTML = scoreA;
+      
+    }
+
+    if(scoreA>=7){
+
+        document.getElementById("gameover").innerHTML="Game over"
+        document.getElementById("player1Score").innerHTML = "";
+        document.getElementById("player2Score").innerHTML = "";
+        
     }
     if(ball.x>canvas.width){
       scoreB += 1;
       document.getElementById("player1Score").innerHTML = scoreB;
     }
+    if(scoreB>=7){
+
+        document.getElementById("gameover").innerHTML="Game over"
+        document.getElementById("player1Score").innerHTML = "";
+        document.getElementById("player2Score").innerHTML = "";
+        
+    }
+
+    document.getElementById("play").addEventListener('click', function(play){
+        scoreA=0;
+        scoreB=0;
+        document.getElementById("player1Score").innerHTML = "";
+        document.getElementById("player2Score").innerHTML = "";
+        document.getElementById("gameover").innerHTML=""
+
+    });
     ball.resetting = true;
 
     // give some time for the player to recover before launching the ball again
